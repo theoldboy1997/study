@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>托块验证</title>
+    <style>
+        body{
+            user-select:none;
+        }
+        .warp{
+            position: relative;
+            width: 300px;
+            height: 40px;
+            margin: 130px auto;
+            background-color: rgb(224, 226, 219);
+        }
+        .rect{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            line-height: 40px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .slide{
+            position: absolute;
+            box-sizing: border-box;
+            width: 45px;
+            height: 40px;
+            border:1px solid #ccc;
+            background-color: #fff;
+            cursor:move;
+        }
+        .bg{
+        position: absolute;
+        width: 0;
+        height: 45px;
+        background-color: rgb(84, 241, 53);
+        }
+        .number{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid#ccc;
+            text-align: center;
+            margin: 30px auto;
+        }
+        .words{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 1px solid#ccc;
+            text-align: center;
+            margin: 60px auto;
+        }
+        .denglu{
+            position: absolute;
+            width: 350px;
+            height:400px;
+            background-color: rgb(138, 206, 218);
+            margin: 10px auto;
+        }
+    </style>
+</head>
+<body>
+<div class="denglu">
+    <input type="radio" name="sex"/>男
+    <input type="radio" name="sex"/>女
+    <div class="number">账号<input></div>
+    <div class="words">密码<input></div>
+    <div class="warp">
+        <div class="bg"></div>
+         <div class="rect">
+             <div class="slide">
+                 <img src="images/right.png" alt="">
+             </div>
+             拖拽滑块认证
+         </div>
+    </div>
+</div>
+    <script>
+        var oSlide = document.querySelector('.slide'),
+            oRect = document.querySelector('.rect'),
+            oBg = document.querySelector('.bg'),
+            oImg = document.querySelector('.slide img'),
+            left = 0,
+            isClick = false,
+            bgWidth = oBg.offsetWidth,
+            slideWidth = oSlide.offsetWidth,
+            rectWidth = oRect.offsetWidth;
+            oSlide.onmousedown = function(e){
+                if(isClick) return;
+                isClick = true;
+            var intX = e.clientX;
+             console.log(e.clientX);
+             document.onmousemove = function(e){
+                 var moveX = e.clientX;
+                 var left = moveX - intX;
+                 
+                 left =  Math.max(left,0);
+                 left = Math.min(left,rectWidth - slideWidth);
+                oBg.style.width = oSlide.style.left = left +'px';
+                if(left>=rectWidth - slideWidth){
+                    oRect.style.color = '#fff';
+                    oImg.src = './images/left.png';
+                }
+             }
+             document.onmouseup = function(){
+                document.onmousemove = null;
+             }
+        }
+       
+    </script>
+</body>
+</html>
